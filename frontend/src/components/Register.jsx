@@ -15,11 +15,13 @@ const Register = () => {
       waterTins: false,
       coolingWaterTins: false,
       waterBottles: false,
-      waterPackers: false,
+      waterPackets: false,
     },
   });
 
+  const [shopImage, setShopImage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -39,13 +41,54 @@ const Register = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleImageChange = (e) => {
+    setShopImage(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match.");
       return;
     }
-    console.log("Registered Shop:", formData);
+
+    try {
+      setLoading(true);
+
+      const data = new FormData();
+      data.append("shopImage", shopImage);
+      data.append("shopName", formData.shopName);
+      data.append("ownerName", formData.ownerName);
+      data.append("phone", formData.phone);
+      data.append("address", formData.address);
+      data.append("location", formData.location);
+      data.append("password", formData.password);
+      data.append("confirmPassword", formData.confirmPassword);
+
+      Object.entries(formData.stock).forEach(([key, value]) => {
+        data.append(`stock[${key}]`, value);
+      });
+
+      const res = await fetch("http://localhost:5000/api/owner/register", {
+        method: "POST",
+        body: data,
+      });
+
+      const result = await res.json();
+
+      if (res.status === 201) {
+        alert("Shop registered successfully!");
+        // Reset form or redirect
+      } else {
+        alert(result.message || "Failed to register.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -70,8 +113,8 @@ const Register = () => {
           Register Shop
         </h2>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Text Inputs */}
           {[
             { label: "Shop Name", name: "shopName" },
             { label: "Owner Name", name: "ownerName" },
@@ -94,7 +137,21 @@ const Register = () => {
             </div>
           ))}
 
-          {/* Password */}
+          {/* Image Upload */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Shop Image
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              required
+              className="w-full"
+            />
+          </div>
+
+          {/* Password Fields */}
           {["password", "confirmPassword"].map((field) => (
             <div key={field}>
               <label className="block text-sm font-medium text-gray-700 mb-1 capitalize">
@@ -131,7 +188,7 @@ const Register = () => {
                 { label: "Water Tins", name: "waterTins" },
                 { label: "Cooling Water Tins", name: "coolingWaterTins" },
                 { label: "Water Bottles", name: "waterBottles" },
-                { label: "Water Packers", name: "waterPackers" },
+                { label: "Water Packets", name: "waterPackets" },
               ].map((item) => (
                 <div className="flex items-center" key={item.name}>
                   <input
@@ -147,12 +204,13 @@ const Register = () => {
             </div>
           </div>
 
-          {/* Submit */}
+          {/* Submit Button */}
           <button
             type="submit"
+            disabled={loading}
             className="w-full bg-blue-500 text-white font-semibold py-2 rounded-md hover:bg-blue-600 transition duration-200"
           >
-            Register
+            {loading ? "Registering..." : "Register"}
           </button>
 
           {/* Login Link */}
