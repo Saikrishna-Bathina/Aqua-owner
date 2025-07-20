@@ -69,3 +69,26 @@ exports.registerOwner = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+
+
+exports.loginOwner = async (req, res) => {
+  const { phone, password } = req.body;
+
+  try {
+    const owner = await Owner.findOne({ phone });
+    if (!owner) {
+      return res.status(400).json({ message: "Phone not registered" });
+    }
+
+    const isMatch = await bcrypt.compare(password, owner.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    res.status(200).json({ message: "Login successful", owner }); // you can send token here too
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
