@@ -74,6 +74,7 @@ const Register = () => {
         method: "POST",
         body: data,
       });
+      console.log(data)
 
       const result = await res.json();
 
