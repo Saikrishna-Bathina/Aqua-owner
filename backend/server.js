@@ -4,6 +4,10 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const ownerRoutes = require("./routes/ownerRoutes");
+const shopRoutes = require("./routes/shopRoutes");
+const orderRoutes = require("./routes/ordersRoutes"); // ✅ add this
+
+
 
 dotenv.config(); 
 
@@ -16,6 +20,9 @@ app.use(express.urlencoded({ extended: true })); // Parse form data (multipart/f
 
 // Routes
 app.use("/api/owner", ownerRoutes);
+app.use("/api/shops", shopRoutes);
+app.use("/api/orders", orderRoutes); // ✅ mount it properly
+
 
 // MongoDB Connection
 mongoose
