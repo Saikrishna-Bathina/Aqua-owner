@@ -1,13 +1,40 @@
-import React from 'react'
-import Register from './components/Register'
-import Login from './components/Login'
+import { Routes, Route } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRoute";
+import Intro from "./pages/Intro";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Profile from "./pages/Profile";
+import Orders from "./pages/Orders";
+import Navbar from "./components/Navbar";
 
-const App = () => {
+function App() {
   return (
-    <div>
-      <Login/>
-    </div>
-  )
+    <>
+      <Navbar /> {/* Always visible */}
+      <Routes>
+        <Route path="/" element={<Intro />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <PrivateRoute>
+              <Orders />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </>
+  );
 }
 
-export default App
+
+export default App;

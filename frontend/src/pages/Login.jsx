@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,8 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const { login } = useContext(AuthContext); // ✅ use login from context
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,8 +39,10 @@ const Login = () => {
       const result = await res.json();
 
       if (res.status === 200) {
+        // ✅ Use context to update global auth state
+        login(result.token, formData.phone);
         alert("Login successful!");
-        navigate("/dashboard"); // update this route as needed
+        navigate("/"); // Redirect to home or dashboard
       } else {
         alert(result.message || "Invalid credentials");
       }

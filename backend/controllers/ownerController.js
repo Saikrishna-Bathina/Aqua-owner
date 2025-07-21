@@ -1,5 +1,7 @@
 const Owner = require("../models/owner");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
 
 // Password validation function
 const isValidPassword = (password) => {
@@ -86,7 +88,22 @@ exports.loginOwner = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    res.status(200).json({ message: "Login successful", owner }); // you can send token here too
+    // ✅ Generate JWT token
+    const token = jwt.sign(
+      { id: owner._id, phone: owner.phone },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.status(200).json({
+      message: "Login successful",
+      token, // ✅ sending token
+      owner: {
+        phone: owner.phone,
+        shopName: owner.shopName,
+        id: owner._id
+      }
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
