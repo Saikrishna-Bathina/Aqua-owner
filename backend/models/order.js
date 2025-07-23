@@ -11,6 +11,11 @@ const orderSchema = new mongoose.Schema({
   paymentMethod: String,
   paymentStatus: String,
   paymentId: String, // Will be null or empty for COD
+  deliveryStatus: {
+    type: String,
+    enum: ["Pending", "Dispatched", "Delivered", "Cancelled"], // You can adjust options
+    default: "Pending"
+  },
   orderItems: {
     waterTins: { type: Number, default: 0 },
     coolingWaterTins: { type: Number, default: 0 },
