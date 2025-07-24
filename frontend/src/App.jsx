@@ -6,15 +6,19 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Orders from "./pages/Orders";
 import Navbar from "./components/Navbar";
+import { Toaster, toast } from 'sonner';
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
     <>
+      <Toaster position="top-right" richColors/>
       <Navbar /> {/* Always visible */}
       <Routes>
         <Route path="/" element={<Intro />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route
           path="/profile"
           element={

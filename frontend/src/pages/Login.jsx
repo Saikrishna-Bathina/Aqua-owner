@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { AuthContext } from "../context/AuthContext";
+import { Toaster, toast } from 'sonner';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -41,8 +42,9 @@ const Login = () => {
       if (res.status === 200) {
         // ✅ Use context to update global auth state
         login(result.token, formData.phone);
-        alert("Login successful!");
-        navigate("/"); // Redirect to home or dashboard
+        toast.success('Login Sucessful');
+        navigate("/dashboard");
+ // Redirect to home or dashboard
       } else {
         alert(result.message || "Invalid credentials");
       }

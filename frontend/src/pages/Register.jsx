@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import { Toaster, toast } from 'sonner';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -49,7 +50,7 @@ const Register = () => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match.");
+      toast.warning("Passwords do not match")
       return;
     }
 
@@ -79,14 +80,14 @@ const Register = () => {
       const result = await res.json();
 
       if (res.status === 201) {
-        alert("Shop registered successfully!");
+        toast.success("Shop registered successfully");
         // Reset form or redirect
       } else {
-        alert(result.message || "Failed to register.");
+        toast.error(result.message)
       }
     } catch (err) {
       console.error(err);
-      alert("Something went wrong. Please try again.");
+      toast.error(err);
     } finally {
       setLoading(false);
     }

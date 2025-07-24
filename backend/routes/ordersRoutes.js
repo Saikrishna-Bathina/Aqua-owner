@@ -7,21 +7,20 @@ const mongoose = require("mongoose"); // ✅ Add this line
 
 // GET orders for logged-in shop owner
 router.get("/my-shop-orders", verifyToken, async (req, res) => {
-  
-
   try {
     const shopPhone = req.user.phone;
-    console.log("phonenum",shopPhone);
+    console.log("phonenum", shopPhone);
 
     const orders = await Order.find({ shopPhone }).sort({ createdAt: -1 });
     console.log(orders);
 
-    res.json(orders);
+    res.json({ orders }); // ✅ fixed here
   } catch (error) {
     console.error("❌ Fetch orders failed", error);
     res.status(500).json({ message: "Server Error" });
   }
 });
+
 
 
 // PUT /api/orders/update-status/:orderId
@@ -48,5 +47,19 @@ router.put("/update-status/:orderId", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+// GET orders by shop phone
+router.get('/shop/:phone', async (req, res) => {
+  try {
+    const shopPhone = req.params.phone;
+    const orders = await Order.find({ shopPhone });
+    res.status(200).json({ orders });
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching orders', error: err.message });
+  }
+});
+
+
+
 
 module.exports = router;

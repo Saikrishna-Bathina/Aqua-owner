@@ -88,6 +88,9 @@ const Navbar = () => {
             <li onClick={() => navigate("/profile")} className="hover:text-blue-600 cursor-pointer">
               Profile
             </li>
+            <li onClick={() => navigate("/dashboard")} className="hover:text-blue-600 cursor-pointer">
+              Dashboard
+            </li>
             <li onClick={handleLogout} className="hover:text-red-500 cursor-pointer transition duration-200">
               Logout
             </li>
@@ -136,6 +139,15 @@ const Navbar = () => {
                   className="hover:text-blue-600 cursor-pointer"
                 >
                   Profile
+                </li>
+                                <li
+                  onClick={() => {
+                    navigate("/dashboard");
+                    toggleMenu();
+                  }}
+                  className="hover:text-blue-600 cursor-pointer"
+                >
+                  Dashboard
                 </li>
                 <li
                   onClick={handleLogout}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
@@ -22,7 +23,8 @@ const Orders = () => {
       }
 
       const data = await response.json();
-      setOrders(data || []);
+      setOrders(data.orders || []);
+
       setError(null);
     } catch (err) {
       console.error("Error fetching orders:", err);
