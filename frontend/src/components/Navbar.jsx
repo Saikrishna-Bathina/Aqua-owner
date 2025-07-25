@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Menu, LogIn, ChevronUp, UserCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext.jsx";
+import { Toaster, toast } from 'sonner';
 
 const Navbar = () => {
   const { isAuthenticated, username, logout } = useContext(AuthContext);
@@ -17,8 +18,10 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout(); // ✅ use context's logout function
+    
     setIsOpen(false);
     navigate("/");
+    toast.success("Logout Sucessfull");
   };
 
   return (
