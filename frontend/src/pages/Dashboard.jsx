@@ -12,8 +12,14 @@ import {
 } from "recharts";
 
 // 📊 Stat Card Component - Enhanced for attractiveness and blue color
-const StatCard = ({ number, label, className = "" }) => (
-  <div className={`bg-white border border-gray-200 shadow-sm rounded-lg p-4 flex flex-col items-center ${className}`}>
+const StatCard = ({ number, label, className = "", onClick }) => (
+  <div
+    className={`bg-white border border-gray-200 shadow-sm rounded-lg p-4 flex flex-col items-center cursor-pointer hover:bg-blue-50 transition ${className}`}
+    onClick={onClick}
+    tabIndex={0}
+    role="button"
+    aria-label={`Go to orders filtered by ${label}`}
+  >
     <p className="text-2xl font-bold text-gray-800">
       <CountUp end={number} duration={2} separator="," />
     </p>
@@ -145,11 +151,27 @@ const Dashboard = () => {
 
         {/* Stat Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <StatCard number={orders.length} label="Total Orders" />
-          <StatCard number={deliveredOrders.length} label="Delivered" />
-          <StatCard number={pendingOrders.length} label="Pending" />
-          <StatCard number={cancelledOrders.length} label="Cancelled" />
-        </div>
+  <StatCard
+    number={orders.length}
+    label="Total Orders"
+    onClick={() => navigate("/orders")}
+  />
+  <StatCard
+    number={deliveredOrders.length}
+    label="Delivered"
+    onClick={() => navigate("/orders")}
+  />
+  <StatCard
+    number={pendingOrders.length}
+    label="Pending"
+    onClick={() => navigate("/orders")}
+  />
+  <StatCard
+    number={cancelledOrders.length}
+    label="Cancelled"
+    onClick={() => navigate("/orders")}
+  />
+</div>
 
         {/* Order Trends Chart Section */}
         <div className="bg-white rounded-xl shadow-lg p-6 border border-blue-100"> {/* Enhanced card styling with subtle border */}
