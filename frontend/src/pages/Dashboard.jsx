@@ -150,7 +150,7 @@ const Dashboard = () => {
         <h1 className="text-4xl font-extrabold text-blue-800 mb-6 text-center">Dashboard Overview</h1> {/* Larger title, centered */}
 
         {/* Stat Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 gap-6">
   <StatCard
     number={orders.length}
     label="Total Orders"
@@ -159,17 +159,17 @@ const Dashboard = () => {
   <StatCard
     number={deliveredOrders.length}
     label="Delivered"
-    onClick={() => navigate("/orders")}
+    onClick={() => navigate("/orders?filter=Delivered")}
   />
   <StatCard
     number={pendingOrders.length}
     label="Pending"
-    onClick={() => navigate("/orders")}
+    onClick={() => navigate("/orders?filter=Pending")}
   />
   <StatCard
     number={cancelledOrders.length}
     label="Cancelled"
-    onClick={() => navigate("/orders")}
+    onClick={() => navigate("/orders?filter=Cancelled")}
   />
 </div>
 

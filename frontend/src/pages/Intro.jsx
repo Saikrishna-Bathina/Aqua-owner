@@ -55,7 +55,7 @@ const fetchOrders = async () => {
 
   const handleGetStarted = () => {
     const token = localStorage.getItem("token");
-    navigate(token ? "/orders" : "/login");
+    navigate(token ? "/dashboard" : "/login");
   };
 
   return (
@@ -82,13 +82,13 @@ const fetchOrders = async () => {
         </div>
       </div>
 
-      {/* Stats Section */}
+      {/* Stats Section
       {!loading && (
         <div className="flex flex-wrap justify-center gap-12 py-10 bg-white">
           <StatCard number={totalOrders} label="Total Orders" />
           <StatCard number={deliveredOrders} label="Delivered Orders" />
         </div>
-      )}
+      )} */}
 
       {/* Image Carousel */}
       <div className="bg-white px-4">

@@ -21,7 +21,9 @@ const Navbar = () => {
     
     setIsOpen(false);
     navigate("/");
-    toast.success("Logout Sucessfull");
+    toast.success("Logout Sucessfull",{
+  autoClose: 2000, // closes in 2 seconds
+});
   };
 
   return (
@@ -115,6 +117,16 @@ const Navbar = () => {
         <div className="absolute top-full left-0 w-full bg-white shadow-md z-40 md:hidden transition-all duration-300 ease-in-out">
           <ul className="flex flex-col space-y-4 p-4 text-gray-700 font-medium">
             
+            <li
+              onClick={() => {
+                navigate("/");
+                toggleMenu();
+              }}
+              className="hover:text-blue-600 cursor-pointer"
+            >
+              Home
+            </li>
+
             <li
               onClick={() => {
                 navigate("/orders");
