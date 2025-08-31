@@ -3,6 +3,8 @@ import { Link, Navigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { Toaster, toast } from 'sonner';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const Register = () => {
   const [formData, setFormData] = useState({
     shopName: "",
@@ -71,7 +73,7 @@ const Register = () => {
         data.append(`stock[${key}]`, value);
       });
 
-      const res = await fetch("http://localhost:5000/api/owner/register", {
+      const res = await fetch(`${API_BASE_URL}/api/owner/register`, {
         method: "POST",
         body: data,
       });

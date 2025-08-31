@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Phone, MapPin, CalendarDays, Store } from "lucide-react";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const Profile = () => {
   const [shop, setShop] = useState(null);
   const [editMode, setEditMode] = useState(false);
@@ -15,12 +17,12 @@ const Profile = () => {
 
   useEffect(() => {
     const randomSeed = Math.random().toString(36).substring(2, 10);
-    setAvatarSeed(randomSeed);
+    setAvatarSeed(randomSeed); 
 
     const fetchShop = async () => {
       try {
         const storedPhone = localStorage.getItem("username");
-        const res = await fetch(`http://localhost:5000/api/shops/${storedPhone}`);
+        const res = await fetch(`${API_BASE_URL}/api/shops/${storedPhone}`);
         if (!res.ok) throw new Error("Failed to fetch shop");
         const data = await res.json();
         setShop(data);
@@ -40,7 +42,7 @@ const Profile = () => {
   const handleUpdate = async () => {
     setIsUpdating(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/shops/${shop.phone}`, {
+      const res = await fetch(`${API_BASE_URL}/api/shops/${shop.phone}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

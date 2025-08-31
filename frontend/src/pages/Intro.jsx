@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import CountUp from "react-countup";
 import axios from "axios";
 
+
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const Intro = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
@@ -22,7 +25,7 @@ const Intro = () => {
       }
 
       const response = await axios.get(
-        `http://localhost:5000/api/orders/my-shop-orders`,
+        `${API_BASE_URL}/api/orders/my-shop-orders`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

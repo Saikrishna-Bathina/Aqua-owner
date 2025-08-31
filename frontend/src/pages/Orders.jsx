@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Phone, User, MapPin, CreditCard } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const Orders = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -13,13 +15,15 @@ const Orders = () => {
   const [pendingStatusChange, setPendingStatusChange] = useState(null);
   const [filterStatus, setFilterStatus] = useState(defaultFilter);
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("User not authenticated. Token missing.");
 
       const response = await fetch(
-        "http://localhost:5000/api/orders/my-shop-orders",
+        `${API_BASE_URL}/api/orders/my-shop-orders`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -46,7 +50,7 @@ const Orders = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://localhost:5000/api/orders/update-status/${orderId}`,
+        `${API_BASE_URL}/api/orders/update-status/${orderId}`,
         {
           method: "PUT",
           headers: {

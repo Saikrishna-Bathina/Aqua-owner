@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Phone, MapPin, CalendarDays, Store } from "lucide-react";
 import { Toaster, toast } from 'sonner';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const Profile = () => {
   const [shop, setShop] = useState(null);
   const [editMode, setEditMode] = useState(false);
@@ -28,7 +30,7 @@ const Profile = () => {
           return;
         }
 
-        const res = await fetch(`http://localhost:5000/api/shops/${storedPhone}`);
+        const res = await fetch(`${API_BASE_URL}/api/shops/${storedPhone}`);
         if (!res.ok) throw new Error("Failed to fetch shop");
 
         const data = await res.json();
@@ -52,7 +54,7 @@ const Profile = () => {
     setMessage("");
     console.log("entere edit")
     try {
-      const res = await fetch(`http://localhost:5000/api/shops/${shop.phone}`, {
+      const res = await fetch(`${API_BASE_URL}/api/shops/${shop.phone}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ shopName, ownerName, phone, address, location }),

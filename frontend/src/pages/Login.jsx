@@ -4,6 +4,8 @@ import { Eye, EyeOff } from "lucide-react";
 import { AuthContext } from "../context/AuthContext";
 import { Toaster, toast } from 'sonner';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const Login = () => {
   const [formData, setFormData] = useState({
     phone: "",
@@ -32,7 +34,7 @@ const Login = () => {
     try {
       setLoading(true);
 
-      const res = await fetch("http://localhost:5000/api/owner/login", {
+      const res = await fetch(`${API_BASE_URL}/api/owner/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
