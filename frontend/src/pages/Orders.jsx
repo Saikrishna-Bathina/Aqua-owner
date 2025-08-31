@@ -187,7 +187,7 @@ const Orders = () => {
 
                 <select
                   value={order.deliveryStatus}
-                  disabled={order.deliveryStatus === "Cancelled"}
+                  disabled={order.deliveryStatus === "Cancelled" || order.deliveryStatus === "Delivered"}
                   onChange={(e) => {
                     const newStatus = e.target.value;
                     if (newStatus === "Cancelled") {

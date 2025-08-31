@@ -24,7 +24,8 @@ const Login = () => {
     e.preventDefault();
 
     if (!/^\d{10}$/.test(formData.phone)) {
-      alert("Phone number must be 10 digits.");
+      //alert("Phone number must be 10 digits.");
+      toast.error("Phone number must be 10 digits")
       return;
     }
 
@@ -46,11 +47,13 @@ const Login = () => {
         navigate("/dashboard");
  // Redirect to home or dashboard
       } else {
-        alert(result.message || "Invalid credentials");
+        //alert(result.message || "Invalid credentials");
+        toast.error("Invalid Phone Number or Password")
       }
     } catch (err) {
       console.error(err);
-      alert("Something went wrong. Please try again.");
+      //alert("Something went wrong. Please try again.");
+      toast.error("Please try again ")
     } finally {
       setLoading(false);
     }

@@ -14,28 +14,31 @@ function App() {
     <>
       <Toaster position="top-right" richColors/>
       <Navbar /> {/* Always visible */}
-      <Routes>
-        <Route path="/" element={<Intro />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/orders"
-          element={
-            <PrivateRoute>
-              <Orders />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
+      <div className="pt-16"> {/* adjust height if navbar is taller */}
+  <Routes>
+    <Route path="/" element={<Intro />} />
+    <Route path="/login" element={<Login />} />
+    <Route path="/register" element={<Register />} />
+    <Route path="/dashboard" element={<Dashboard />} />
+    <Route
+      path="/profile"
+      element={
+        <PrivateRoute>
+          <Profile />
+        </PrivateRoute>
+      }
+    />
+    <Route
+      path="/orders"
+      element={
+        <PrivateRoute>
+          <Orders />
+        </PrivateRoute>
+      }
+    />
+  </Routes>
+</div>
+
     </>
   );
 }

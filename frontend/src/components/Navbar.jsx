@@ -22,12 +22,12 @@ const Navbar = () => {
     setIsOpen(false);
     navigate("/");
     toast.success("Logout Sucessfull",{
-  autoClose: 2000, // closes in 2 seconds
+  autoClose: 500, // closes in 2 seconds
 });
   };
 
   return (
-    <nav className="bg-white shadow-md px-4 py-3 flex items-center justify-between relative z-50">
+    <nav className="fixed top-0 left-0 w-full bg-white shadow-md px-4 py-3 flex items-center justify-between z-50">
       {/* Left: Logo + Hamburger */}
       <div className="flex items-center space-x-3">
         {/* Mobile Hamburger */}
@@ -74,8 +74,7 @@ const Navbar = () => {
             onClick={handleLogin}
             className="flex items-center gap-1 text-blue-600 font-medium hover:text-blue-800 transition duration-200"
           >
-            <LogIn className="w-5 h-5" />
-            <span>Login</span>
+            
           </button>
         )}
       </div>
@@ -84,9 +83,6 @@ const Navbar = () => {
       <ul className="hidden md:flex space-x-6 text-gray-700 font-medium ml-auto">
         <li onClick={() => navigate("/")} className="hover:text-blue-600 cursor-pointer">
           Home
-        </li>
-        <li onClick={() => navigate("/orders")} className="hover:text-blue-600 cursor-pointer">
-          My Orders
         </li>
         {isAuthenticated ? (
           <>
@@ -127,15 +123,6 @@ const Navbar = () => {
               Home
             </li>
 
-            <li
-              onClick={() => {
-                navigate("/orders");
-                toggleMenu();
-              }}
-              className="hover:text-blue-600 cursor-pointer"
-            >
-              My Orders
-            </li>
             {isAuthenticated ? (
               <>
                 <li

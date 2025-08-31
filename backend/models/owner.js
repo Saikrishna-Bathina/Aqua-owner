@@ -7,7 +7,8 @@ const ownerSchema = new mongoose.Schema({
   type: String,
   required: true,
   unique: true,
-  match: [/^\d{10}$/, "Phone number must be 10 digits long and numeric"]
+  match: [/^\d{10}$/, "Phone number must be 10 digits long and numeric"],
+  immutable: true
 },
   address: String,
   location: String,

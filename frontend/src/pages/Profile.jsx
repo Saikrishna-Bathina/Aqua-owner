@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Phone, MapPin, CalendarDays, Store } from "lucide-react";
+import { Toaster, toast } from 'sonner';
 
 const Profile = () => {
   const [shop, setShop] = useState(null);
@@ -14,14 +15,22 @@ const Profile = () => {
   const [avatarSeed, setAvatarSeed] = useState("");
 
   useEffect(() => {
+    // 🎲 Generate random avatar seed every time
     const randomSeed = Math.random().toString(36).substring(2, 10);
     setAvatarSeed(randomSeed);
 
     const fetchShop = async () => {
       try {
         const storedPhone = localStorage.getItem("username");
+        console.log("in lc",storedPhone)
+        if (!storedPhone) {
+          setMessage("No phone number found. Please login again.");
+          return;
+        }
+
         const res = await fetch(`http://localhost:5000/api/shops/${storedPhone}`);
         if (!res.ok) throw new Error("Failed to fetch shop");
+
         const data = await res.json();
         setShop(data);
         setShopName(data.shopName);
@@ -31,6 +40,7 @@ const Profile = () => {
         setLocation(data.location);
       } catch (error) {
         console.error("Fetch error:", error);
+        toast.error("Could not load shop profile")
       }
     };
 
@@ -39,24 +49,27 @@ const Profile = () => {
 
   const handleUpdate = async () => {
     setIsUpdating(true);
+    setMessage("");
+    console.log("entere edit")
     try {
       const res = await fetch(`http://localhost:5000/api/shops/${shop.phone}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ shopName, ownerName, phone, address, location }),
       });
 
       if (!res.ok) throw new Error("Update failed");
+
       const updatedShop = await res.json();
       setShop(updatedShop);
       localStorage.setItem("phone", updatedShop.phone);
-      setMessage("Profile updated successfully!");
+    
+      toast.success("Profile updated successfully")
       setEditMode(false);
     } catch (error) {
       console.error("Update error:", error);
-      setMessage("Failed to update profile.");
+  
+      toast.error("Failed to update profile")
     }
     setIsUpdating(false);
   };
@@ -85,7 +98,11 @@ const Profile = () => {
               </h3>
 
               {message && (
-                <div className="mb-4 text-sm text-green-600 font-medium">
+                <div
+                  className={`mb-4 text-sm font-medium ${
+                    message.startsWith("✅") ? "text-green-600" : "text-red-600"
+                  }`}
+                >
                   {message}
                 </div>
               )}
@@ -128,6 +145,10 @@ const Profile = () => {
                   </label>
                   {editMode ? (
                     <input
+                      type="tel"
+                      pattern="[0-9]{10}"
+                      disabled
+                      readOnly
                       className="border border-gray-300 p-2 rounded w-full max-w-md shadow-sm"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
@@ -215,7 +236,17 @@ const Profile = () => {
             </div>
           </div>
         ) : (
-          <p className="text-center text-gray-500 text-lg">Loading profile...</p>
+          // 🟢 Skeleton Loader
+          <div className="w-full max-w-4xl bg-white shadow-xl border border-blue-100 rounded-3xl p-10 animate-pulse">
+            <div className="flex gap-6">
+              <div className="w-32 h-32 bg-gray-200 rounded-full"></div>
+              <div className="flex-1 space-y-4">
+                <div className="h-6 bg-gray-200 rounded w-1/2"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/3"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>

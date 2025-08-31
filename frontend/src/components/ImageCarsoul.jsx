@@ -25,7 +25,7 @@ const AdCarousel = () => {
               key={index}
               src={src}
               alt={`Ad ${index + 1}`}
-              className="w-full object-cover flex-shrink-0"
+              className="w-full object-cover flex-shrink-0 rounded-xl"  // ✅ Added border radius
             />
           ))}
         </div>
