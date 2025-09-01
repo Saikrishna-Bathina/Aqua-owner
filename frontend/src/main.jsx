@@ -5,6 +5,13 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css'
 import { AuthProvider } from "./context/AuthContext"; 
 
+
+// Import service worker registration
+import { registerSW } from 'virtual:pwa-register'
+
+// Register it (auto updates when new version deployed)
+registerSW({ immediate: true })
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <AuthProvider>
