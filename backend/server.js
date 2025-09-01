@@ -16,7 +16,7 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",              // local dev
   "https://puredrop-owner.onrender.com",
-  "https://puredrop-owner.vercel.app/" ,
+  "https://puredrop-owner.vercel.app" ,
   "https://puredrop-owner-2de4ir1o0-sai-krishna-bathinas-projects.vercel.app "   // replace with your deployed frontend URL
 ];
 
