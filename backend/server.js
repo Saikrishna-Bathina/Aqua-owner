@@ -15,7 +15,8 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",              // local dev
-  "https://puredrop-owner.onrender.com"    // replace with your deployed frontend URL
+  "https://puredrop-owner.onrender.com",
+  "http://localhost:10000"    // replace with your deployed frontend URL
 ];
 
 // Middleware
